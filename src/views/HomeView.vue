@@ -1,14 +1,14 @@
 <template>
   <div class="main-container">
-    <v-row class="home-container">
+    <v-row class="home-container" id="home">
       <v-container>
         <h1 class="main-title">Clothing & Fashion</h1>
         <h2 class="sub-title">A Ladies Clothing Store Boutique</h2>
         <v-row>
           <v-spacer />
           <v-img
-            width="500"
-            src="https://static.s123-cdn-static-d.com/ready_uploads/svg/normal_60472d64ed4c4.svg"
+            width="400"
+            :src="require('@/assets/images/home.svg')"
             class="my-12"
           ></v-img>
           <v-spacer />
@@ -16,52 +16,74 @@
       </v-container>
     </v-row>
 
-    <v-row>
-      <v-spacer />
-      <v-col
-        v-for="(item, index) in items"
-        :key="index"
-        cols="12"
-        sm="6"
-        md="4"
-        lg="3"
-      >
-        <Card :items="item"></Card>
-      </v-col>
-      <v-spacer />
-    </v-row>
+    <v-container id="ecommerce">
+      <h1 class="sub-title">NEW ARRIVAL</h1>
+      <hr />
+      <v-row>
+        <v-spacer />
+        <v-col
+          v-for="(item, index) in items"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="3"
+          lg="3"
+          xl="3"
+        >
+          <v-container my-12>
+            <router-link to="/details"><Card :items="item"></Card></router-link>
+          </v-container>
+        </v-col>
+        <v-spacer />
+      </v-row>
+    </v-container>
+
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Card from "@/components/Card.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "HomeView",
+  mounted() {
+    window.scrollTo(0, 0);
+  },
   data() {
     return {
       items: [
         {
           title: "Blue Pants",
+          description:
+            "These blue pants for men stand out as fashionable attire that any man would be proud to wear.",
           price: 79,
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c1791a0313a1.jpg",
+          // image: "@/assets/images/blue-pants.webp"
         },
         {
           title: "Brown Jacket",
+          description:
+            "This brown jacket for men looks great and is good for all occasions.",
           price: 159,
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178fc9abfbb.jpg",
         },
         {
           title: "Green Bag",
+          description:
+            "A fashionable green bag that lets you carry around what you need while looking stylish.",
           price: 89,
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178e836f01a.jpg",
         },
         {
           title: "Turquoise Dress",
+          description:
+            "A lovely turquoise dress to look fabulous in while enjoying a night on the town.",
           price: 120,
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178d6d607e7.jpg",
@@ -71,6 +93,7 @@ export default {
   },
   components: {
     Card,
+    Footer,
   },
 };
 </script>
@@ -86,7 +109,7 @@ export default {
   margin: auto;
 }
 .main-title {
-  margin-top: 150px;
+  margin-top: 100px;
   font-weight: bolder;
   font-size: 4em;
 }
@@ -97,5 +120,11 @@ export default {
 }
 .img-container {
   margin: auto;
+}
+hr {
+  margin: 20px auto;
+  max-width: 50px;
+  border-color: #423144;
+  border-width: 2px;
 }
 </style>

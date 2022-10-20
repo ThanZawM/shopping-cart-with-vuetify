@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <v-app>
-      <Nav></Nav>
+      <Nav />
+      <MobileNav />
       <v-main>
         <router-view />
       </v-main>
@@ -11,10 +12,14 @@
 
 <script>
 import Nav from "@/components/Navigation.vue";
+import MobileNav from "./components/MobileNav.vue";
+
 export default {
   components: {
     Nav,
-  },
+    MobileNav,
+    
+},
 };
 </script>
 

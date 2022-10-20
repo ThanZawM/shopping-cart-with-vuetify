@@ -5,7 +5,9 @@
         <v-card-title class="text-h5 grey lighten-2">
           Your Cart
           <v-spacer></v-spacer>
-          <v-icon dark color="black">{{ this.mdiClose }}</v-icon>
+          <v-btn icon @click="dialog = false">
+            <v-icon dark color="black">{{ this.mdiClose }}</v-icon>
+          </v-btn>
         </v-card-title>
 
         <v-card-text>
@@ -35,10 +37,10 @@ import { mdiClose } from "@mdi/js";
 export default {
   data() {
     return {
-      dialog: true,
       mdiClose: mdiClose,
     };
   },
+  props: { dialog: Boolean}
 };
 </script>
 

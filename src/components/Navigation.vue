@@ -34,7 +34,7 @@
       /> -->
     </v-container>
 
-    <CardNav v-if="clickCart"></CardNav>
+    <CardNav v-if="clickCart" :dialog="true"></CardNav>
   </v-navigation-drawer>
 </template>
 

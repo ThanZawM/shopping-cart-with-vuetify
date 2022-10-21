@@ -6,8 +6,9 @@
           <v-row>
             <v-col>
               <v-container style="text-align: start">
-                <router-link to="/">Home</router-link> / E-commerce / Turquoise
-                Dress</v-container
+                <router-link to="/">Home</router-link> /
+                <router-link to="/">E-commerce</router-link> /
+                {{ items[$route.params.id].title }}</v-container
               >
             </v-col>
           </v-row>
@@ -15,7 +16,7 @@
           <v-row>
             <v-col>
               <v-container>
-                <h1>TURQUOISE DRESS</h1>
+                <h1>{{ items[$route.params.id].title }}</h1>
                 <hr class="subTitle-hr" />
               </v-container>
             </v-col>
@@ -24,19 +25,29 @@
           <v-row
             ><v-col cols="4">
               <v-container>
-                <Card :items="items[3]"></Card>
+                <Card
+                  :items="items[$route.params.id]"
+                  :addtocart="true"
+                  :wdth="230"
+                  :hgt="300"
+                ></Card>
+                <!-- <h1>{{$route.params}}</h1> -->
               </v-container>
             </v-col>
             <v-col cols="8">
               <v-container>
                 <v-container>
-                  <p style="text-align: left">{{ items[3].description }}</p>
+                  <p style="text-align: left">
+                    {{ items[$route.params.id].description }}
+                  </p>
                 </v-container>
                 <v-divider></v-divider>
                 <v-container my-6>
-                  <h1 style="text-align: left">${{ items[3].price }}</h1>
+                  <h1 style="text-align: left">
+                    ${{ items[$route.params.id].price }}
+                  </h1>
                   <h3 style="text-align: left; margin-top: 5px">
-                    Shipping: {{ items[3].shipping }}
+                    Shipping: {{ items[$route.params.id].shipping }}
                   </h3>
                 </v-container>
                 <v-divider></v-divider>
@@ -64,9 +75,18 @@
                         >
                       </v-btn-toggle>
 
-                      <v-btn color="#423144" class="white--text py-6 px-8"
-                        >ADD TO CART</v-btn
-                      >
+                      <v-btn
+                        color="#423144"
+                        class="white--text py-6 px-8"
+                        @click="storeData($route.params.id)"
+                        >ADD TO CART
+                      </v-btn>
+
+                      <CardNav
+                        v-if="clickCart"
+                        :dialog="clickCart"
+                        :productid="$route.params.id"
+                      ></CardNav>
                     </v-row>
                   </v-col>
                 </v-container>
@@ -84,16 +104,20 @@
 <script>
 import Footer from "@/components/Footer.vue";
 import Card from "@/components/Card.vue";
+import CardNav from "@/components/CartNav.vue";
 import { mdiPlus, mdiMinus } from "@mdi/js";
 
 export default {
-  components: { Footer, Card },
+  components: { Footer, Card, CardNav },
   data() {
     return {
+      clickCart: false,
       mdiPlus: mdiPlus,
       mdiMinus: mdiMinus,
+      cartItems: [],
       items: [
         {
+          id: 1,
           title: "Blue Pants",
           description:
             "These blue pants for men stand out as fashionable attire that any man would be proud to wear.",
@@ -103,6 +127,7 @@ export default {
           shipping: "Free Shipping",
         },
         {
+          id: 2,
           title: "Brown Jacket",
           description:
             "This brown jacket for men looks great and is good for all occasions.",
@@ -112,6 +137,7 @@ export default {
           shipping: "Free Shipping",
         },
         {
+          id: 3,
           title: "Green Bag",
           description:
             "A fashionable green bag that lets you carry around what you need while looking stylish.",
@@ -121,6 +147,7 @@ export default {
           shipping: "Free Shipping",
         },
         {
+          id: 4,
           title: "Turquoise Dress",
           description:
             "A lovely turquoise dress to look fabulous in while enjoying a night on the town.",
@@ -131,6 +158,21 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    storeData(id) {
+      console.log(id);
+      let oldData = JSON.parse(localStorage.getItem("cartItems"));
+      this.cartItems = [this.items[id]];
+      if (oldData === null) {
+        localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
+      } else {
+        oldData = [...oldData, ...this.cartItems];
+        localStorage.setItem("cartItems", JSON.stringify(oldData));
+      }
+
+      this.clickCart = !this.clickCart;
+    },
   },
 };
 </script>

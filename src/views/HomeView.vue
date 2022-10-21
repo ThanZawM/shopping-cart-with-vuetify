@@ -22,8 +22,8 @@
       <v-row>
         <v-spacer />
         <v-col
-          v-for="(item, index) in items"
-          :key="index"
+          v-for="item in items"
+          :key="item.id"
           cols="12"
           sm="6"
           md="3"
@@ -31,7 +31,23 @@
           xl="3"
         >
           <v-container my-12>
-            <router-link to="/details"><Card :items="item"></Card></router-link>
+            <router-link
+              :to="{ name: 'details', params: { id: items.indexOf(item) } }"
+              ><Card
+                :items="item"
+                :addtocart="true"
+                :wdth="230"
+                :hgt="300"
+              ></Card
+            ></router-link>
+            <!-- <router-link to="/details/:"
+              ><Card
+                :items="item"
+                :addtocart="true"
+                :wdth="230"
+                :hgt="300"
+              ></Card
+            ></router-link> -->
           </v-container>
         </v-col>
         <v-spacer />
@@ -56,6 +72,7 @@ export default {
     return {
       items: [
         {
+          id: 1,
           title: "Blue Pants",
           description:
             "These blue pants for men stand out as fashionable attire that any man would be proud to wear.",
@@ -65,6 +82,7 @@ export default {
           // image: "@/assets/images/blue-pants.webp"
         },
         {
+          id: 2,
           title: "Brown Jacket",
           description:
             "This brown jacket for men looks great and is good for all occasions.",
@@ -73,6 +91,7 @@ export default {
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178fc9abfbb.jpg",
         },
         {
+          id: 3,
           title: "Green Bag",
           description:
             "A fashionable green bag that lets you carry around what you need while looking stylish.",
@@ -81,6 +100,7 @@ export default {
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178e836f01a.jpg",
         },
         {
+          id: 4,
           title: "Turquoise Dress",
           description:
             "A lovely turquoise dress to look fabulous in while enjoying a night on the town.",

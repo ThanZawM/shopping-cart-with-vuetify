@@ -23,7 +23,7 @@
     <v-divider width="150"></v-divider>
     <br /><br />
     <v-divider></v-divider>
-    <v-container my-5 @click="clickCart = true">
+    <v-container my-5 @click="clickCart = !clickCart">
       <v-badge color="#423144" overlap :content="testCartValue">
         <v-icon x-large>{{ svgPath }}</v-icon>
       </v-badge>
@@ -34,7 +34,7 @@
       /> -->
     </v-container>
 
-    <CardNav v-if="clickCart" :dialog="true"></CardNav>
+    <CardNav v-if="clickCart" :dialog="clickCart"></CardNav>
   </v-navigation-drawer>
 </template>
 

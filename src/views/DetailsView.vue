@@ -6,8 +6,8 @@
           <v-row>
             <v-col>
               <v-container style="text-align: start">
-                <router-link to="/">Home</router-link> /
-                <router-link to="/">E-commerce</router-link> /
+                <router-link to="/" class="routerLink" active-class="green--text">Home</router-link> /
+                <router-link to="/" class="routerLink" active-class="green--text">E-commerce</router-link> /
                 {{ items[$route.params.id].title }}</v-container
               >
             </v-col>
@@ -186,5 +186,8 @@ export default {
 }
 .detials {
   margin: auto;
+}
+.routerLink:hover{
+  text-decoration-line: underline;
 }
 </style>

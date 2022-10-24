@@ -2,15 +2,12 @@
   <div>
     <v-dialog v-model="dialog" width="500">
       <v-card>
-        <v-card-title
-          style="background: #423144"
-          class="text-h5 white--text py-5"
-        >
+        <v-card-title style="background: #423144" class="text-h5 white--text py-5">
           Your Cart
           <v-spacer></v-spacer>
           <v-btn icon @click="dialog = false">
             <v-icon dark color="black" class="white--text">{{
-              this.mdiClose
+            this.mdiClose
             }}</v-icon>
           </v-btn>
         </v-card-title>
@@ -20,16 +17,27 @@
         </v-container> -->
 
         <v-container>
-          <v-card>
-            <v-container v-for="(obj, index) in cartObjs" :key="index">
-              <v-img :src="obj.image"></v-img>
-              <v-card-text>{{ obj.title }}</v-card-text>
-              <v-card-text>${{ obj.price }}</v-card-text>
-            </v-container>
-            <!-- <v-container>
-              <v-card-tex> </v-card-tex>
-            </v-container>
-            <v-card-actions> </v-card-actions> -->
+          <v-card elevation="4">
+            <v-row v-for="(obj, index) in cartObjs" :key="index">
+              <v-col cols="3">
+                <v-img :src="obj.image"></v-img>
+              </v-col>
+              <v-col cols="3">
+                <v-card-text>{{ obj.title }}</v-card-text>
+                <v-card-text>${{ obj.price }}</v-card-text>
+                <v-card-tex>Quantity</v-card-tex>
+              </v-col>
+
+              <v-col cols="3">
+                <v-card-actions index>
+                  <v-btn icon>
+                    <v-icon color="error">{{mdiDelete}}</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-col>
+            </v-row>
+
+
           </v-card>
         </v-container>
 
@@ -49,21 +57,9 @@
             </v-row>
             <v-row>
               <v-col>
-                <v-btn
-                  color="#423144"
-                  width="100%"
-                  class="white--text"
-                  @click="dialog = false"
-                  >MAKE AN ORDER</v-btn
-                >
-                <v-btn
-                  color="#423144"
-                  class="my-3"
-                  outlined
-                  width="100%"
-                  @click="dialog = false"
-                  >CONTINUE SHOPPING</v-btn
-                >
+                <v-btn color="#423144" width="100%" class="white--text" @click="dialog = false">MAKE AN ORDER</v-btn>
+                <v-btn color="#423144" class="my-3" outlined width="100%" @click="dialog = false">CONTINUE SHOPPING
+                </v-btn>
               </v-col>
             </v-row>
           </v-row>
@@ -76,10 +72,12 @@
 <script>
 import { mdiClose, mdiPlus, mdiMinus } from "@mdi/js";
 import Card from "./Card.vue";
+import { mdiDelete } from '@mdi/js';
 
 export default {
   data() {
     return {
+      mdiDelete: mdiDelete,
       mdiPlus: mdiPlus,
       mdiMinus: mdiMinus,
       mdiClose: mdiClose,
@@ -95,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
->>> .v-dialog {
+>>>.v-dialog {
   margin: 0;
   position: absolute;
   top: 0;
@@ -105,7 +103,8 @@ export default {
   max-height: 100% !important;
   overflow: auto;
 }
->>> .v-card {
+
+>>>.v-card {
   top: 0;
   height: 100%;
   overflow: auto;

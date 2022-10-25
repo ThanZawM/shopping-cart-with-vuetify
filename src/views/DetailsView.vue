@@ -6,9 +6,20 @@
           <v-row>
             <v-col>
               <v-container style="text-align: start">
-                <router-link to="/" class="routerLink" active-class="green--text">Home</router-link> /
-                <router-link to="/" class="routerLink" active-class="green--text">E-commerce</router-link> /
-                {{ items[$route.params.id].title }}</v-container
+                <router-link
+                  to="/"
+                  class="routerLink"
+                  active-class="green--text"
+                  >Home</router-link
+                >
+                /
+                <router-link
+                  to="/"
+                  class="routerLink"
+                  active-class="green--text"
+                  >E-commerce</router-link
+                >
+                / {{ items[$route.params.id].title }}</v-container
               >
             </v-col>
           </v-row>
@@ -56,11 +67,13 @@
                     <v-row align="center" justify="space-between" no-gutters>
                       <v-btn-toggle>
                         <v-btn icon
-                          ><v-icon color="green">{{ this.mdiPlus }}</v-icon>
+                          ><v-icon color="green" @click="itemcount++">{{
+                            this.mdiPlus
+                          }}</v-icon>
                         </v-btn>
                         <input
                           type="number"
-                          value="1"
+                          v-model="itemcount"
                           style="
                             width: 65px;
                             text-align: center;
@@ -69,9 +82,13 @@
                           "
                         />
                         <v-btn icon
-                          ><v-icon color="green">{{
-                            this.mdiMinus
-                          }}</v-icon></v-btn
+                          ><v-icon
+                            color="green"
+                            @click="
+                              itemcount > 1 ? itemcount-- : (itemcount = 1)
+                            "
+                            >{{ this.mdiMinus }}</v-icon
+                          ></v-btn
                         >
                       </v-btn-toggle>
 
@@ -114,6 +131,8 @@ export default {
       clickCart: false,
       mdiPlus: mdiPlus,
       mdiMinus: mdiMinus,
+      itemId: this.$route.params.id,
+      itemcount: 1,
       cartItems: [],
       items: [
         {
@@ -125,6 +144,7 @@ export default {
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c1791a0313a1.jpg",
           shipping: "Free Shipping",
+          count: 3,
         },
         {
           id: 2,
@@ -135,6 +155,7 @@ export default {
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178fc9abfbb.jpg",
           shipping: "Free Shipping",
+          count: 444,
         },
         {
           id: 3,
@@ -145,6 +166,7 @@ export default {
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178e836f01a.jpg",
           shipping: "Free Shipping",
+          count: 55,
         },
         {
           id: 4,
@@ -155,24 +177,43 @@ export default {
           image:
             "https://static1.s123-cdn-static-a.com/uploads/2031/2000_5c178d6d607e7.jpg",
           shipping: "Free Shipping",
+          count: 2,
         },
       ],
     };
   },
   methods: {
     storeData(id) {
+      this.clickCart = !this.clickCart;
       console.log(id);
       let oldData = JSON.parse(localStorage.getItem("cartItems"));
       this.cartItems = [this.items[id]];
       if (oldData === null) {
         localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
+        // this.clickCart = false;
       } else {
         oldData = [...oldData, ...this.cartItems];
         localStorage.setItem("cartItems", JSON.stringify(oldData));
+        // this.clickCart = false;
       }
-
-      this.clickCart = !this.clickCart;
     },
+    // for update count of item
+    addCountData(id) {
+      console.log(id);
+      let oldData = JSON.parse(localStorage.getItem("cartItems"));
+      this.cartItems = [this.items[id]];
+      if (oldData === null) {
+        localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
+        // this.clickCart = false;
+      } else {
+        oldData = [...oldData, ...this.cartItems];
+        localStorage.setItem("cartItems", JSON.stringify(oldData));
+        // this.clickCart = false;
+      }
+    },
+  },
+  mounted() {
+    this.itemcount = this.items[this.itemId].count;
   },
 };
 </script>
@@ -187,7 +228,7 @@ export default {
 .detials {
   margin: auto;
 }
-.routerLink:hover{
+.routerLink:hover {
   text-decoration-line: underline;
 }
 </style>
